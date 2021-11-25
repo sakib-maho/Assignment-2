@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+
+   <link rel="stylesheet" type="text/css" href="map.css" />
+
+   <link rel="stylesheet" href="style.css">
+   <script src="./JavaScript/map.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+
+   <style>
+      .navbarr {
+         overflow: hidden;
+
+      }
+
+      .navbarr a {
+         float: left;
+         font-size: 16px;
+         color: black;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+      }
+
+      .dropdownn {
+         float: left;
+         overflow: hidden;
+      }
+
+      .dropdownn .dropbtnn {
+         font-size: 16px;
+         border: none;
+         outline: none;
+         color: black;
+         padding: 14px 16px;
+         background-color: inherit;
+         font-family: inherit;
+         margin: 0;
+      }
+
+
+      .dropdown-contentt {
+         display: none;
+         position: absolute;
+         background-color: #f9f9f9;
+         min-width: 160px;
+         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+         z-index: 1;
+      }
+
+      .dropdown-contenttt {
+         display: none;
+         position: absolute;
+         background-color: #f9f9f9;
+         width: 100vw;
+         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+         z-index: 1;
+         right: 0;
+      }
+
+      .dropdown-contentt a {
+         float: none;
+         color: black;
+         padding: 12px 16px;
+         text-decoration: none;
+         display: block;
+         text-align: left;
+      }
+
+      .dropdown-contenttt a {
+         float: none;
+         color: black;
+         padding: 12px 16px;
+         text-decoration: none;
+         display: block;
+         text-align: left;
+      }
+
+      .dropdown-contentt a:hover {
+         background-color: #ddd;
+      }
+
+      .dropdown-contenttt a:hover {
+         background-color: #ddd;
+      }
+
+      .dropdownn:hover .dropdown-contentt {
+         display: block;
+      }
+
+      .dropdownn:hover .dropdown-contenttt {
+         display: block;
+      }
+
+      .topnav-right {
+         float: right;
+      }
+
+      .has-searchh .form-controll {
+         padding-left: 1.375rem;
+      }
+
+      .has-searchh .form-control-feedbackk {
+         position: absolute;
+         z-index: 2;
+         display: block;
+         width: 1.40rem;
+         height: 2.0rem;
+         line-height: 2.20rem;
+         text-align: center;
+         pointer-events: none;
+         color: #aaa;
+      }
+
+      .button {
+         border: none;
+         color: white;
+         padding: 5px 10px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+
+         cursor: pointer;
+      }
+
+      .bottom-left {
+         position: absolute;
+         bottom: 200px;
+         left: 16px;
+         color: black;
+         background: rgba(255, 255, 255, 0.9);
+      }
+
+      .bottom-right {
+         position: absolute;
+         bottom: 202px;
+         right: 16px;
+         color: rgba(255, 255, 255, 0.9);
+      }
+
+      .top-right {
+         position: absolute;
+         top: 8px;
+         right: 16px;
+         background: rgba(255, 255, 255, 0.9);
+      }
+
+      .btnnn {
+         background-color: rgba(255, 255, 255, 0.9);
+         border: none;
+         color: black;
+         padding: 4px 16px;
+         font-size: 16px;
+         cursor: pointer;
+         height: 30px;
+         width: 150px;
+      }
+
+      .button1 {
+         background-color: #f7941d;
+      }
+
+      .button2 {
+         background-color: white;
+         color: black;
+         border: 2px solid #555555;
+         width: 140px;
+         height: 35px;
+         padding-left: -10px;
+      }
+
+      #slider-div {
+         display: flex;
+         flex-direction: row;
+         margin-top: 30px;
+
+      }
+
+      #slider-div>div {
+         margin: 8px;
+
+
+      }
+
+      .slider-label {
+         position: absolute;
+         background-color: #eee;
+         padding: 4px;
+         font-size: 0.75rem;
+      }
+   </style>
+</head>
+
+<body>
+   <div id="hotel" style="position: relative;">
+      <!-- Modal for Final Popup -->
+      <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel2">Search Results</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body" >
+                  <h1 id="invalid_data">Please, fillup all the Fields</h1>
+                  <div id="search_data">
+                     <div style="display: flex;">
+                        <span>Search: </span>
+                        <p style="padding-left: 10px;" id="search1"></p>
+                     </div>
+
+                     <div style="display: flex;">
+                        <span>Checkin: </span>
+                        <p style="padding-left: 10px;" id="checkin"></p>
+
+                     </div>
+
+                     <div style="display: flex;">
+                        <span>Checkout: </span>
+                        <p style="padding-left: 10px;" id="checkout"></p>
+
+                     </div>
+
+                     <div style="display: flex;">
+                        <span>Guests: </span>
+                        <p style="padding-left: 10px;" id="guests"></p>
+
+                     </div>
+
+                     <div style="display: flex;">
+                        <span>Price range: </span>
+                        <p style="padding-left: 10px;" id="priceRange"></p>
+
+                     </div>
+                  </div>
+
+
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Modal for Guests -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Guests Number</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <div style="display: flex; justify-content: space-around;">
+                     <span style="margin-top: 10px;">Guests</span>
+                     <span><button class="btn-light" type="button" onclick="deccrement()"><i
+                              class="fas fa-minus-circle text-warning fa-2x"></i></button></span>
+                     <span style="margin-top: 10px;" id="guests_no">0</span>
+                     <span><button class="btn-light" type="button" onclick="increment()"><i
+                              class="fas fa-plus-circle text-warning fa-2x"></i></button></span>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Apply</button>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Modal for Price Range -->
+      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel1">Price Range</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <div class="price-range-slider">
+
+                     <p class="range-value">
+                        <input type="text" id="amount" readonly>
+                     </p>
+                     <div id="slider-range" class="range-bar"></div>
+
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button onclick="priceshow()" type="button" class="btn btn-warning" data-bs-dismiss="modal">Apply</button>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+      <nav class="d-sm-none d-none d-md-block">
+         <div class="navbarr">
+            <div class="dropdownn">
+               <button class="dropbtnn">
+                  <i class="fa fas fa-bars"></i>
+               </button>
+               <div class="dropdown-contentt">
+                  <a href="#">Home</a>
+                  <a href="#">Profile</a>
+                  <a href="#">Location</a>
+               </div>
+            </div>
+
+            <img src="https://cdn-assets.bedroomvillas.com/vff/1.1.18-v2/images/logos/bedroomvillas-logo-new.png"
+               width="auto" height="auto" alt="">
+
+
+            <div class="topnav-right d-sm-none d-none d-md-block" style="display: flex; flex-wrap: wrap;">
+               <a href="#search">
+                  <div class="form-groupp has-searchh">
+                     <span class="fa fa-search form-control-feedbackk"></span>
+
+                     <input id="search_input" style="width: 140px; height: 35px;" type="text" class="form-controll"
+                        placeholder="Arizona USA" onkeypress="myFunction()">
+                  </div>
+               </a>
+               <a href="#about">
+                  <div style="display: flex;" class="form-groupp has-searchh">
+                     <input style="width: 140px; height: 35px;" id="checkInDate" type="text" class="form-controll"
+                        placeholder="Check In">
+                     <input style="width: 140px; height: 35px;" id="checkOutDate" type="text" class="form-controll"
+                        placeholder="Check Out">
+                     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        class="button button2"><i class="fas fa-users"></i> <span id="guest_no">Guests</span> <i
+                           class="fas fa-chevron-down"></i></button>
+                     <button onclick="run()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                        class="button button2"><span id="price_range">Price Range</span> <i class="fas fa-chevron-down"></i></button>
+
+                  </div>
+
+               </a>
+               <span> <a href="#about"><button type="submit" onclick="showData()" class="button button1" type="button"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Search</button></a>
+                  <a style="padding-left: 000px;" href="#about"><button type="button" data-bs-toggle="modal"
+                        data-bs-target="" class="button button2">Filters</button></a>
+               </span>
+
+
+            </div>
+
+
+
+
+      </nav>
+
+
+
+
+      <!-- This is a comment -->
+
+      <nav class=" navi navbar navbar-dark d-block d-sm-block d-md-none">
+
+         <div style="display: flex; justify-content: space-between;">
+
+            <img src="https://cdn-assets.bedroomvillas.com/vff/1.1.18-v2/images/logos/bedroomvillas-logo-new.png"
+               width="auto" height="auto" alt="">
+
+            <div class="navbarr">
+               <div class="dropdownn">
+                  <button class="dropbtnn">
+                     <i class="fa fas fa-bars"></i>
+                  </button>
+                  <div class="dropdown-contenttt">
+                     <a href="#">Home</a>
+                     <a href="#">Profile</a>
+                     <a href="#">Location</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+      </nav>
+
+      <nav class=" navi navbar navbar-dark bg-primary d-block d-sm-block d-md-none">
+
+         <form class="d-flex " style="justify-content: left;">
+
+            <input style="width: 80px;" class="form-control me-2 border border-3 d-sm-block d-block d-md-none"
+               type="search" placeholder="Search" aria-label="Search">
+
+            <input class="form-control me-2 border border-3 d-sm-block d-block d-md-none" type="text"
+               placeholder="In > Out" aria-label="Search">
+
+
+            <form class=" d-flex">
+
+               <button class="btn  d-block d-sm-block d-md-none" id="c" type="submit"
+                  style="background-color: #f7941d;color: white;">Search</button>
+               <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn  d-block d-sm-block d-md-none"
+                  id="c" type="submit" style="background-color: #364d6a;color: white;">Filters</button>
+
+            </form>
+
+         </form>
+
+      </nav>
+
+      <!-- This is a comment -->
+      <hr>
+      <div style="display: flex; flex-wrap: wrap;">
+         <span style="padding-left: 15px;">Vacation Rentals in Arizona</span>
+         <span style="padding-left: 15px; color: #ff7601;">|</span>
+         <span style="padding-left: 15px; color: #ff7601;">USA</span>
+         <span style="padding-left: 15px; color: #ff7601;"> <i class="fas fa-greater-than"></i> </span>
+         <span style="padding-left: 15px; color: #ff7601;">Arizona</span>
+      </div>
+      <hr>
+
+      <div class="container-fluid">
+         <div style="background:#f4f4f4;" class="row row-cols-1 row-cols-md-3 g-4">
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img src="./photos/1.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Coventina Lake Suites </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex; ">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px; font-family: Open Sans,sans-serif; font-size: 15px; ">683 Reviews</span>
+                                 </span>
+                              </div>
+
+
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;" >Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px;font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px; " class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px;font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img src="./photos/2.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Rafflesia Serviced Apartments </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px; font-family: Open Sans,sans-serif; font-size: 15px; ">683 Reviews</span>
+                                 </span>
+                              </div>
+
+
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;">Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px; font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px;" class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px; font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img src="./photos/3.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Contemporary Heights Hotel </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px; font-family: Open Sans,sans-serif; font-size: 15px; ">683 Reviews</span>
+                                 </span>
+                              </div>
+
+
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;">Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px;font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px;" class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px; font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img
+                     src="./photos/4.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Green House Guest House </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px; font-family: Open Sans,sans-serif; font-size: 15px;">683 Reviews</span>
+                                 </span>
+                              </div>
+
+
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;">Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px;font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px;" class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px; font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img
+                     src="./photos/5.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Megher Chaya Resort </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px;font-family: Open Sans,sans-serif; font-size: 15px; ">683 Reviews</span>
+                                 </span>
+                              </div>
+
+
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;">Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px;font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px;" class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px; font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div style="padding: 10px;" class="col">
+               <div class="card h-100">
+                  <img
+                     src="./photos/6.jpg"
+                     class="card-img-top" height="250">
+                  <div class="bottom-left"><button type="button" class="btn  btn-sm">From $200</button></div>
+                  <div class="bottom-right"><i class="big fa fab fa-gratipay fa-lg"></i></div>
+                  <div class="top-right"><button class="btnnn"> <span>More Photos</span> <i
+                           class="fas fa-external-link-alt"></i></button></div>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-family: Open Sans,sans-serif;">Impressa on Shah </h5>
+                     <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column;">
+                           <div style="display: flex; justify-content: space-between;">
+                              <div style="display: flex">
+                                 <span>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa fas fa-star"></i>
+                                    <i class="fa far fa-star"></i> <span style="padding-left: 5px; font-family: Open Sans,sans-serif; font-size: 15px;">683 Reviews</span>
+                                 </span>
+                              </div>
+                           </div>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px;">Sleeps 85</span>
+                           <span style="font-family: Open Sans,sans-serif; font-size: 15px; color: blue;">Arizona <i class="fas fa-greater-than"></i> Lake Havasu City</span>
+                           <span style="padding-top: 20px;font-family: Open Sans,sans-serif;font-size: 15px;"><i class="fa far fa-check"></i>View<i
+                                 style="padding-left: 10px;" class="fa far fa-check"></i>Child Friendly</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <br>
+                           <span><button style="background:#f7941d; color: white;" type="button" class="btn btn-sm">View
+                                 Details</button></span>
+                           <br>
+                           <span style="padding-top: 56px; padding-left: 13px; font-size: 15px;">BC-367739</span>
+
+                        </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+         </div>
+         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                     ...
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="button" class="btn btn-primary">Understood</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+      <!-- <div class="text-center p-5" style="position: absolute; z-index: 1000; bottom: 30px; left: 90vh;">
+         <button onclick="hideHotel()" type="button" class="btn btn-success text-center">Success</button>
+   
+      </div> -->
+   </div>
+
+   <div class="bg-light">
+
+      <div class="d-flex justify-content-center fixed-bottom mb-3">
+
+         <button class="btn btn-dark rounded-pill" id="mapButton" onclick="hideHotel()">
+
+            Show Map &nbsp; <i class="fas fa-map-marked-alt"></i>
+
+         </button>
+
+      </div>
+
+   </div>
+
+
+
+   <!-- <button id="mapbtn" style="display: none;">jkbjkghjkghj</button> -->
+   <div id="map" style="display: none;"> </div>
+
+
+
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArTUpPxK58U3xCnOuoFYGMtLfce4S0Ok4&libraries=places"></script> -->
+   <script
+      src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyArTUpPxK58U3xCnOuoFYGMtLfce4S0Ok4"></script>
+   <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArTUpPxK58U3xCnOuoFYGMtLfce4S0Ok4&callback=initMap&v=weekly"
+      async></script> -->
+   <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArTUpPxK58U3xCnOuoFYGMtLfce4S0Ok4&libraries=places&callback=initMap"
+      async></script>
+   <script src="./JavaScript/date.js"></script>
+   <script src="./JavaScript/search.js"></script>
+   <script src="./JavaScript/search_data.js"></script>
+   <script src="./JavaScript/guest.js"></script>
+   <script src="./JavaScript/mapShow.js"></script>
+   <script src="./JavaScript/priceshow.js"></script>
+
+   <script>
+
+$(function () {
+    $("#slider-range").slider({
+        range: true,
+        min: 130,
+        max: 500,
+        values: [130, 250],
+        slide: function (event, ui) {
+            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
+    });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
+});
+
+
+   </script>
+
+</body>
+
+</html>
